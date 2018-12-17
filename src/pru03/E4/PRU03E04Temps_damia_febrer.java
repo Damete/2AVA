@@ -12,6 +12,7 @@ public class PRU03E04Temps_damia_febrer {
 	int minuts;
 	int segons;
 
+	//Aqui tenemos el metodo que se encarga de hacer las sumas. Para ello comprueba si la suma de los segundos es mayor a 60, si lo es añade 1 minuto, lo mismo con los minutos, si es mayor a 60 suma 1 hora. Esto lo hara mientras los minutos y los segundos sean mayores a 60
 	public String sumar(int hores,int minuts,int segons) {
 		int pipo_minuts = 0;
 		int pipo_segons = 0;
@@ -31,6 +32,7 @@ public class PRU03E04Temps_damia_febrer {
 		return "La suma es:" + (this.hores + hores) + "h" + pipo_minuts + "m" + pipo_segons + "s";
 	}
 
+	// Aqui tenemos el metodo que se encarga de hacer las restas. Para ello comprueba si la resta de los segundos da negativo, si es asi resta 1 minuto y suma 60 segundos para compensar el numero negativo. En los minutos lo mismo, si el resultado es negativo resta 1hora. Esto lo hara mientras los minutos y los segundos sean inferiores a 0
 	public String restar(int hores, int minuts, int segons) {
 		int pipo_minuts = 0;
 		int pipo_segons = 0;
