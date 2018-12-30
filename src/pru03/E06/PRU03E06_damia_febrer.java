@@ -56,7 +56,7 @@ public class PRU03E06_damia_febrer {
 				while(menu_secundari!=4);
 			}
 			if (menu_principal == 2) {
-				// La segona opció del menu ens permet comprar entrades per a la zona que seleccionem, aixo ho fa cridant al mètode vendre que prèviament s'ha definit per la clase Zona y ho seguira fent mentres ñ'usuario no surti del bucle
+				// La segona opció del menu ens permet comprar entrades per a la zona que seleccionem, aixo ho fa cridant al mètode vendre que prèviament s'ha definit per la clase Zona y ho seguira fent mentres l'usuari no surti del bucle
 				do {
 					System.out.println("\n" + "Seleccioni la zona de la que vol comprar entrades." + "\n" + "1. Platea" + "\n" + "2. Amfiteatre" + "\n" + "3. VIP" + "\n" + "4. Tornar al menu principal");
 					menu_secundari = sc.nextInt();
