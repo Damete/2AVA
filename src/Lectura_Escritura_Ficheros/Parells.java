@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Parells {
 	public static void main(String[] args) {
 		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Damià Febrer\\Programacion\\parells.dat"));
+			BufferedWriter bw = new BufferedWriter(new FileWriter("F:\\DAM\\parells.dat"));
 			for (int i=0; i<=500; i+=2) {
 				bw.write(i +"\n");
 			}
@@ -19,3 +19,9 @@ public class Parells {
 		}
 	}
 }
+
+
+
+
+
+/*C:\\Damià Febrer\\Programacion\\archivo*/

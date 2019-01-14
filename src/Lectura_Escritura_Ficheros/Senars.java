@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Senars {
 	public static void main(String[] args) {
 		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Damià Febrer\\Programacion\\senars.dat"));
+			BufferedWriter bw = new BufferedWriter(new FileWriter("F:\\DAM\\senars.dat"));
 			for (int i=1; i<500; i+=2) {
 				bw.write(i +"\n");
 			}

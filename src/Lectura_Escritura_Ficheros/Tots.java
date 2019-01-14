@@ -9,17 +9,24 @@ import java.io.IOException;
 public class Tots {
 	public static void main(String[] args) {
 		try {
-			BufferedReader brs = new BufferedReader(new FileReader("C:\\Damià Febrer\\Programacion\\senars.dat"));
-			BufferedReader brp = new BufferedReader(new FileReader("C:\\Damià Febrer\\Programacion\\parells.dat"));
-			BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Damià Febrer\\Programacion\\tots.dat"));
+			BufferedReader brs = new BufferedReader(new FileReader("F:\\DAM\\senars.dat"));
+			BufferedReader brp = new BufferedReader(new FileReader("F:\\DAM\\parells.dat"));
+			BufferedWriter bw = new BufferedWriter(new FileWriter("F:\\DAM\\tots.dat"));
 			String senars = "";
 			String parells = "";
-			
+
 			while (senars != null && parells != null){
-				senars = brs.readLine();
-				parells = brp.readLine();
+				if(parells!=null){
+					parells = brp.readLine();
+					bw.write(parells + "\n");
+				}
+				if(senars!=null) {
+					senars = brs.readLine();
+					bw.write(senars + "\n");
+				}
 			}
 			brs.close();
+			brp.close();
 			bw.close();
 			System.out.println("S'ha escrtit correctament");
 		}
