@@ -14,7 +14,7 @@ public class PRU04E01_1_damia_febrer{
 			String comprovar_paraules;
 			/* Cream els metodes per llegir i escriure al fitxer*/
 			BufferedReader br = new BufferedReader(new FileReader (args[0]));
-			BufferedWriter bw = new BufferedWriter(new FileWriter (args[0] + "sorted.txt"));
+			BufferedWriter bw = new BufferedWriter(new FileWriter (args[0] + "_sort.txt"));
 			/*Cream un ArrayList a on es guardaran les paraules que es llegeixin del fitxer*/
 			ArrayList<String> palabras = new ArrayList<String>();
 			
