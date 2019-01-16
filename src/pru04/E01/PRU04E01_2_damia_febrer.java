@@ -12,11 +12,12 @@ public class PRU04E01_2_damia_febrer {
 	public static void main (String[] args) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(args[0]));
-			BufferedWriter bw = new BufferedWriter(new FileWriter(args[0] +"test"));
+			BufferedWriter bw = new BufferedWriter(new FileWriter(args[1]));
 			ArrayList<String> paraules = new ArrayList<String>();
 			String llegir_linea;
-			String cast;
+			String comprovar;
 			String net;
+			/*Ficam el que es va llegint del fitxer a l'ArrayList si el que es troba esta bui deixa de ficar contigut a l'arraylist*/
 			do {
 				llegir_linea = br.readLine();
 				if(llegir_linea != null) {
@@ -24,9 +25,10 @@ public class PRU04E01_2_damia_febrer {
 				}
 			}
 			while(llegir_linea != null);
+			/*Aqui treim el contingut de l'array y comproban si conte una doble barra. Si ho fa s'elimina aquesta posicio de l'array. Si no l'escriu al fitxer*/
 			for(int i=0; i < paraules.size(); i++) {
-				cast = paraules.get(i);
-				if(cast.contains(null)) {
+				comprovar = paraules.get(i);
+				if(comprovar.contains("//")) {
 					paraules.remove(i);
 				}
 				net = paraules.get(i);
