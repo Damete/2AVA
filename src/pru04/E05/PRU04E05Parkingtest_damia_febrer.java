@@ -1,9 +1,10 @@
 package pru04.E05;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class PRU04E05Parkingtest_damia_febrer {
-	public static void main (String[] args) {
+	public String comprovarMatricula(String intro) {
 		System.out.println("Introduce matricula");
 		Scanner sc = new Scanner(System.in);
 		String inicial;
@@ -25,5 +26,12 @@ public class PRU04E05Parkingtest_damia_febrer {
 		catch(Exception e) {
 			System.out.println("La matricula introducida es incorrecta");
 		}
+		return matricula;
+	}
+	
+	HashMap<Integer, String> mapa = new HashMap<Integer, String>();
+	public int entraCoche(String matricula) {
+		// Esta matricula puede usar el metodo comprovarMatricula
+		mapa.put(2,matricula);
 	}
 }
