@@ -44,7 +44,6 @@ public class PRU04E05Parking_damia_febrer {
 			if(places_discapacitats == 0 && places_no_discapacitats != 0) {
 				Mapa.put(places_no_discapacitats --, matricula);
 			}
-			places = places_no_discapacitats + places_discapacitats;
 		}
 		catch(Exception e) {
 			
