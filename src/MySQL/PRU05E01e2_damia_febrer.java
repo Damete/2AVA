@@ -1,0 +1,48 @@
+package MySQL;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
+public class PRU05E01e2_damia_febrer {
+	private Connection conexion = null; 
+	private Statement statement = null;
+	private Statement eliminar = null;
+	private ResultSet resultado = null;
+
+	public void leerBase() throws SQLException {
+		try {
+			/*Conectarse con la base de datos*/
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost/employees? user=root&password=cide1234");
+			/*Crear el flujo de ordenes*/
+			statement = conexion.createStatement();
+			/*Enviar las ordenes a la base de datos*/
+			resultado = statement.executeQuery("select * from departments order by dept_no DESC");
+			obtenerInfo(resultado);
+			resultado.close();
+			statement.close();
+			conexion.close();
+		} catch (SQLException e) {
+			conexion.close();
+		} catch (Exception e) {
+			System.out.println("Patata");
+		}
+	}
+	public void obtenerInfo(ResultSet resultSet) throws Exception{
+		while(resultado.next()) {
+			String dept_no = resultado.getString("dept_no");
+			String dept_name = resultado.getString("dept_name");
+			
+			System.out.println("El nummero del departamento es: " + dept_no);
+			System.out.println("El nombre del departamento es: " + dept_name);
+			System.out.println("==================================");
+		}
+	}
+	public static void main (String[] args) throws Exception{
+		PRU05E01e2_damia_febrer base = new PRU05E01e2_damia_febrer();
+		base.leerBase();
+	}
+}
