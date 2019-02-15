@@ -5,16 +5,20 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 
 public class PRU05E01e2_damia_febrer {
 	private Connection conexion = null; 
 	private Statement statement = null;
-	private Statement eliminar = null;
+	private ResultSet eliminar = null;
 	private ResultSet resultado = null;
-
+	Scanner sc = new Scanner(System.in);
+	
 	public void leerBase() throws SQLException {
 		try {
+			String cambio;
+			String nombre = null;
 			/*Conectarse con la base de datos*/
 			conexion = DriverManager.getConnection("jdbc:mysql://localhost/employees? user=root&password=cide1234");
 			/*Crear el flujo de ordenes*/
@@ -22,13 +26,18 @@ public class PRU05E01e2_damia_febrer {
 			/*Enviar las ordenes a la base de datos*/
 			resultado = statement.executeQuery("select * from departments order by dept_no DESC");
 			obtenerInfo(resultado);
+			System.out.println("De que departamento quieres acmbiar el nombre?");
+			cambio = sc.nextLine();
+			System.out.println("Introduce el nuevo nombre del departamento");
+			nombre = sc.nextLine();
+			eliminar = statement.executeQuery("update departments set dept_name = '" + nombre + "' where dept_name = '" + cambio +"'");
 			resultado.close();
 			statement.close();
 			conexion.close();
 		} catch (SQLException e) {
 			conexion.close();
 		} catch (Exception e) {
-			System.out.println("Patata");
+			e.getMessage();
 		}
 	}
 	public void obtenerInfo(ResultSet resultSet) throws Exception{
