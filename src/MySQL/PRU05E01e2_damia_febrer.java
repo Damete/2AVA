@@ -11,26 +11,31 @@ import java.util.Scanner;
 public class PRU05E01e2_damia_febrer {
 	private Connection conexion = null; 
 	private Statement statement = null;
-	private ResultSet eliminar = null;
 	private ResultSet resultado = null;
+
 	Scanner sc = new Scanner(System.in);
-	
-	public void leerBase() throws SQLException {
+
+	public void leerBase(String argumento) throws SQLException {
 		try {
-			String cambio;
 			String nombre = null;
 			/*Conectarse con la base de datos*/
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost/employees? user=root&password=cide1234");
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost/employees?user=root&password=cide1234");
 			/*Crear el flujo de ordenes*/
 			statement = conexion.createStatement();
-			/*Enviar las ordenes a la base de datos*/
+			/*Obtenemos el resultado de la consulta*/
 			resultado = statement.executeQuery("select * from departments order by dept_no DESC");
+			/*Mostramos el resultado de la consulta*/
 			obtenerInfo(resultado);
-			System.out.println("De que departamento quieres acmbiar el nombre?");
-			cambio = sc.nextLine();
+			statement.execute("delete from departments where dept_name = '" + argumento + "'");
 			System.out.println("Introduce el nuevo nombre del departamento");
 			nombre = sc.nextLine();
-			eliminar = statement.executeQuery("update departments set dept_name = '" + nombre + "' where dept_name = '" + cambio +"'");
+			/*Modificamos el departamento que se pasa como argumento con el nombre que solicitamos al usuario*/
+			statement.execute("insert into departments (dept_no,dept_name) values ('" + argumento + "' , '" + nombre + "'");
+			/*Volvemos a obtener el resultado de la consulta*/
+			resultado = statement.executeQuery("select * from departments order by dept_no DESC");
+			/*Y volvemos a mostrarlo ahora modificado*/
+			obtenerInfo(resultado);
+			/*Cerramos las coneciones*/
 			resultado.close();
 			statement.close();
 			conexion.close();
@@ -40,11 +45,11 @@ public class PRU05E01e2_damia_febrer {
 			e.getMessage();
 		}
 	}
-	public void obtenerInfo(ResultSet resultSet) throws Exception{
+	public void obtenerInfo(ResultSet resultado) throws Exception{
 		while(resultado.next()) {
 			String dept_no = resultado.getString("dept_no");
 			String dept_name = resultado.getString("dept_name");
-			
+
 			System.out.println("El nummero del departamento es: " + dept_no);
 			System.out.println("El nombre del departamento es: " + dept_name);
 			System.out.println("==================================");
@@ -52,6 +57,6 @@ public class PRU05E01e2_damia_febrer {
 	}
 	public static void main (String[] args) throws Exception{
 		PRU05E01e2_damia_febrer base = new PRU05E01e2_damia_febrer();
-		base.leerBase();
+		base.leerBase(args[0]);
 	}
 }

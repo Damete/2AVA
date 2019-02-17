@@ -14,10 +14,10 @@ public class PRU05E01e1_damia_febrer {
 	public void leerBase() throws SQLException {
 		try {
 			/*Conectarse con la base de datos*/
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost/employees? user=root&password=cide1234");
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost/employees?user=root&password=cide1234");
 			/*Crear el flujo de ordenes*/
 			statement = conexion.createStatement();
-			/*Enviar las ordenes a la base de datos*/
+			/*Obtenemos el resultado de la consulta*/
 			resultado = statement.executeQuery("select * from departments order by dept_no DESC");
 			obtenerInfo(resultado);
 			/*Cerramos las conexiones*/
@@ -27,7 +27,7 @@ public class PRU05E01e1_damia_febrer {
 		} catch (SQLException e) {
 			conexion.close();
 		} catch (Exception e) {
-			System.out.println("Patata");
+			e.getMessage();
 		}
 	}
 	public void obtenerInfo(ResultSet resultSet) throws Exception{
