@@ -25,6 +25,7 @@ public class PRU05E01e1_damia_febrer {
 			statement.close();
 			conexion.close();
 		} catch (SQLException e) {
+			e.getMessage();
 			conexion.close();
 		} catch (Exception e) {
 			e.getMessage();

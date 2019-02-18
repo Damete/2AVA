@@ -30,7 +30,7 @@ public class PRU05E01e2_damia_febrer {
 			System.out.println("Introduce el nuevo nombre del departamento");
 			nombre = sc.nextLine();
 			/*Modificamos el departamento que se pasa como argumento con el nombre que solicitamos al usuario*/
-			statement.execute("insert into departments (dept_no,dept_name) values ('" + argumento + "' , '" + nombre + "'");
+			statement.execute("insert into departments (dept_no,dept_name) values ('" + argumento + "','" + nombre + "'");
 			/*Volvemos a obtener el resultado de la consulta*/
 			resultado = statement.executeQuery("select * from departments order by dept_no DESC");
 			/*Y volvemos a mostrarlo ahora modificado*/
@@ -40,6 +40,7 @@ public class PRU05E01e2_damia_febrer {
 			statement.close();
 			conexion.close();
 		} catch (SQLException e) {
+			e.getMessage();
 			conexion.close();
 		} catch (Exception e) {
 			e.getMessage();
