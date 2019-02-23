@@ -1,17 +1,14 @@
 package Grafico;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import pru03.E07.PRU03E07_damia_febrer.Article;
-
 /*Esto se destina a modificar el ejercicio del almacen pasando el menú al entorno gráfico*/
 
 public class almacen_grafico {
-	Scanner sc = new Scanner(System.in);
-	ArrayList<Article> articles = new ArrayList<Article>();
 
 	public class Article {
 		private String codi = "LLIURE";
@@ -72,94 +69,140 @@ public class almacen_grafico {
 		}
 	}
 
-	public void listado() {
-		for (int i=0; i < articles.size(); i++) {
-			System.out.println(articles.get(i));
-		}
-		if(articles.size() <= 0) {
-			JFrame main = new JFrame();
-			JOptionPane.showMessageDialog(main," Encara no hi ha cap article al magatzem" , "Es lo que hay", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-	public void menu() {//El menu solo acabara cuando el usuario lo indique.
-		int menu_principal;
-		int menu_secundari;
-		int check;
-		String codi;
-		String descripcio;
-		double preuDeCompra = 0.0;
-		double preuDeVenda = 0.0;
-		int stock = 0;
-		int eliminar;
-		int entrada;
-		int valor_a_modificar;
-		int quantitat = 0;
-		String modificar_codi;
-		String modificacio="0";
-		double modificar_preu;
-		double preu_a_modificar;
-		double comprovar_preu;
+	Scanner sc = new Scanner(System.in);
+	ArrayList<Article> articles = new ArrayList<Article>();
+	int menu_secundari = 0;
+	int check;
+	String codi;
+	String descripcio;
+	double preuDeCompra = 0.0;
+	double preuDeVenda = 0.0;
+	int stock = 0;
+	int eliminar;
+	int entrada;
+	int valor_a_modificar;
+	int quantitat = 0;
+	String modificar_codi;
+	String comprobar_codigo;
+	String modificacio="0";
+	double modificar_preu;
+	double preu_a_modificar;
+	double comprovar_preu;
 
-		Object[] opciones = {"1. Llistat","2. Alta","3. Baixa","4. Modificacio","5. Entrada de mercaderia","6. Sortida de mercaderia","7. Sortir"};
+	public String frame() {
 		JFrame main = new JFrame();
-		String principal = (String)JOptionPane.showInputDialog(main, "Que vols fer?", "Menu principal",JOptionPane.PLAIN_MESSAGE,null, opciones, "1. Llistat");
-		menu_principal = sc.nextInt();
-		if ((principal != null)&& principal.length()>0) {
-			JOptionPane.showMessageDialog(main,"Esto es lo que hay en el almacen", "Listado",JOptionPane.PLAIN_MESSAGE,null);
+		Object[] opciones = {"1-Listado","2-Alta","3-Baja","4-Modificacion","5-Entrada","6-Salida","7-Salir"};
+		String principal = (String)JOptionPane.showInputDialog(main,"Que operacion quieres realizar?","Main",JOptionPane.PLAIN_MESSAGE,null,opciones,"1-Listado");
+		if(principal.equals("1-Listado")) {
 			listado();
 		}
-		if (menu_principal == 2) {	//Aqui cream un nou objecte amb els valors que asignam per teclat i l'afegim a l'arraylist
-			System.out.println("\n Introdueixi el codi de l'article \n");
-			codi = sc.next();
-			System.out.println("\n Introdueixi la descripcio de l'article \n");
-			descripcio = sc.next();
+		if(principal.equals("2-Alta")) {
+			alta();
+		}
+		if(principal.equals("3-Baja")) {
+			baja();
+		}
+		if(principal.equals("4-Modificacion")) {
+			modificacion();
+		}
+		if(principal.equals("5-Entrada")) {
+			entrada();
+		}
+		if(principal.equals("6-Salida")) {
+			salida();
+		}
+		main.setDefaultCloseOperation(main.EXIT_ON_CLOSE);
+		return principal;
+	}
+
+	public Component frame_aux() {
+		JFrame aux = new JFrame();
+		return aux;
+	}
+
+	public void listado() {
+		Article test = null;
+		for (int i=0; i < articles.size(); i++) {
+			test = articles.get(i);
+			JOptionPane.showMessageDialog(frame_aux(),test,"Listado",JOptionPane.PLAIN_MESSAGE);
+		}
+		if(articles.size() <= 0) {
+			JOptionPane.showMessageDialog(frame_aux(), "No hay ningun articulo en el almacen", "Error", JOptionPane.ERROR_MESSAGE,null);
+		}
+	}
+
+	public void alta() {
+		System.out.println("\n Introdueixi el codi de l'article \n");
+		codi = sc.next();
+		System.out.println("\n Introdueixi la descripcio de l'article \n");
+		descripcio = sc.next();
+		do {
 			System.out.println("\n Intordueixi el preu de compra de l'article \n");
 			comprovar_preu = sc.nextDouble();
 			if(comprovar_preu < 0) {	//Comprobam que el valor que asignam al preu no sigui negatiu
-				System.out.println("\n No pots asignar un valor negatiu \n");
+				JOptionPane.showMessageDialog(frame_aux(),"No puedes asignar un valor negativo, por favor vuelve a introducirlo" , "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			if(comprovar_preu >= 0) {
 				preuDeCompra = comprovar_preu;
 			}
+		}
+		while(comprovar_preu < 0);
+		do {
 			System.out.println("\n Introdueixi el preu de venda de l'article \n");
 			comprovar_preu = sc.nextDouble();
 			if(comprovar_preu < 0) {	//Comprobam que el valor que asignam al preu no sigui negatiu
-				System.out.println("\n No es pot asignar un numero negatiu \n");
+				JOptionPane.showMessageDialog(frame_aux(),"No puedes asignar un valor negativo, por favor vuelve a introducirlo" , "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			if(comprovar_preu >= 0) {
 				preuDeVenda = comprovar_preu;
 			}
+		}
+		while(comprovar_preu < 0);
+		do {
 			System.out.println("\n Intordueixi el stock de l'article \n");
 			check = sc.nextInt();
 			if (check < 0) {	//Comprobam que el valor que asignam a l'estock no sigui negatiu
-				System.out.println("\n No es poden asignar valors negatius \n");
+				JOptionPane.showMessageDialog(frame_aux(),"No puedes asignar un valor negativo, por favor vuelve a introducirlo" , "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			if (check >= 0) {
 				stock = check;
 			}
-			Article pipo = new Article();
-			pipo.setCodi(codi);
-			pipo.setDescripcio(descripcio);
-			pipo.setPreuDeCompra(preuDeCompra);
-			pipo.setPreuDeVenda(preuDeVenda);
-			pipo.setStock(stock);
-			System.out.println(pipo.toString());
-			articles.add(pipo);
 		}
-		if (menu_principal == 3) {	//Eliminam de l'arraylist l'objecte que introduiguem per teclat. Primer mostrarm tots els objectes que conte l'arraylist
+		while(check <0);
+		Article pipo = new Article();
+		pipo.setCodi(codi);
+		pipo.setDescripcio(descripcio);
+		pipo.setPreuDeCompra(preuDeCompra);
+		pipo.setPreuDeVenda(preuDeVenda);
+		pipo.setStock(stock);
+		System.out.println(pipo.toString());
+		JOptionPane.showMessageDialog(frame_aux(), "Articulo añadido correctamente", "Alta", JOptionPane.PLAIN_MESSAGE);
+		articles.add(pipo);
+	}
+
+	public void baja() {
+		if(articles.size()<=0) {
+			JOptionPane.showMessageDialog(frame_aux(), "No hay ningun articulo que eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		else {
 			System.out.println("\n Indiqui l'article que vol eliminar (El primer es 0) \n");
 			for (int i=0; i < articles.size(); i++) {
 				System.out.println(articles.get(i));
 			}
 			eliminar = sc.nextInt();
 			articles.remove(eliminar);
+			JOptionPane.showMessageDialog(frame_aux(), "Articulo eliminado correctamente", "Baja", JOptionPane.PLAIN_MESSAGE);
 		}
-		if (menu_principal == 4) {
-			do {
-				System.out.println("\n Quin camp vol modificar? \n 1. Codi \n 2. Descripcio \n 3. Preu de compra \n 4. Preu de Venda \n 5. Sortir \n");
-				menu_secundari = sc.nextInt();
-				if(menu_secundari == 1) {
-					//Mostrm els objectes que conte l'arraylist. Despres demanam el nou valor a asignar a la variable y s'asigna.
+	}
+
+	public void modificacion() {
+		boolean exit = false;
+		Object[] opciones = {"1-Codigo","2-Descripcion","3-Precio de compra","4-Precio de venta","5-Salir"};
+		do {
+			String secundario = (String)JOptionPane.showInputDialog(frame_aux(),"Que quiere modificar?","Modificacion",JOptionPane.PLAIN_MESSAGE,null,opciones,"1-Codigo");
+			if(secundario.matches("1-Codigo") == true) {
+				//Mostrm els objectes que conte l'arraylist. Despres demanam el nou valor a asignar a la variable y s'asigna.
+				if(articles.size()>0) {
 					System.out.println("\n Quin article vol modificar? (El primer es 0) \n");
 					for (int i=0; i < articles.size(); i++) {
 						System.out.println(articles.get(i));
@@ -168,10 +211,15 @@ public class almacen_grafico {
 					System.out.println("\n Quin es el codi que li vol asignar a l'article? \n");
 					modificacio = sc.next();
 					modificar_codi = articles.get(entrada).getCodi();
-					modificar_codi = modificacio;
-					articles.get(entrada).setCodi(modificar_codi);
+					articles.get(entrada).setCodi(modificacio);
+					JOptionPane.showMessageDialog(frame_aux(), "Codigo modificada correctamente \n el nuevo codigo es: " + modificar_codi,"Modificacion del codigo del articulo", JOptionPane.PLAIN_MESSAGE);
 				}
-				if(menu_secundari == 2) {	//Mostrm els objectes que conte l'arraylist. Despres demanam el nou valor a asignar a la variable y s'asigna.
+				else {
+					JOptionPane.showMessageDialog(frame_aux(), "No hay ningun articulo en el almacen", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			if(secundario.matches("2-Descripcion") == true) {	//Mostrm els objectes que conte l'arraylist. Despres demanam el nou valor a asignar a la variable y s'asigna.
+				if(articles.size()>0) {
 					System.out.println("\n Quin article vol modificar? (El primer es 0) \n ");
 					for (int i=0; i < articles.size(); i++) {
 						System.out.println(articles.get(i));
@@ -179,28 +227,40 @@ public class almacen_grafico {
 					entrada = sc.nextInt();
 					System.out.println("\n Quina es la descripcio que vol asignar a l'article? \n");
 					modificacio = sc.next();
-					modificar_codi = articles.get(entrada).getDescripcio(); 	//Agafam el valor que te la variable de lobjecte desitjat de l'arraylist en aquest cas es entrada per poder introduiro per teclat
-					modificar_codi = modificacio;								//Asignam el valor que volem modificar a la variable que hem obtingut abans
-					articles.get(entrada).setDescripcio(modificar_codi); 		//Ficam la variable modificada a l'objecte desitjat de l'arraylist
+					articles.get(entrada).setDescripcio(modificacio); 		//Ficam la variable modificacio a l'objecte desitjat de l'arraylist
+					JOptionPane.showMessageDialog(frame_aux(), "Descripcion modificada correctamente","Modificacion de la descripcion del articulo", JOptionPane.PLAIN_MESSAGE);
 				}
-				if (menu_secundari == 3) {
+				else {
+					JOptionPane.showMessageDialog(frame_aux(), "No hay ningun articulo en el almacen", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			if (secundario.matches("3-Precio de compra") == true) {
+				if(articles.size()>0) {
 					System.out.println("\n Quin article vol modificar? (El primer es 0) \n ");
 					for (int i=0; i < articles.size(); i++) {
 						System.out.println(articles.get(i));
 					}
 					entrada = sc.nextInt();
-					System.out.println("\n Quin es el preu de compra que vol asignar a l'article? \n ");
-					modificar_preu = sc.nextDouble();
-					if (modificar_preu < 0.0) {
-						System.out.println("\n No pots asignar valors negatius \n");
+					do {
+						System.out.println("\n Quin es el preu de compra que vol asignar a l'article? \n ");
+						modificar_preu = sc.nextDouble();
+						if (modificar_preu < 0.0) {
+							JOptionPane.showMessageDialog(frame_aux(), "No puedes asignar un precio negativo", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else {
+							preu_a_modificar = modificar_preu;
+							articles.get(entrada).setPreuDeCompra(preu_a_modificar);
+							JOptionPane.showMessageDialog(frame_aux(), "Precio modificado correctamente \n el nuevo precio es: " + preu_a_modificar, "Modificacion del precio de compra", JOptionPane.PLAIN_MESSAGE);
+						}
 					}
-					preu_a_modificar = articles.get(entrada).getPreuDeCompra();
-					if (modificar_preu >= 0.0) {
-						preu_a_modificar = modificar_preu;
-					}
-					articles.get(entrada).setPreuDeCompra(preu_a_modificar);
+					while(preu_a_modificar < 0.0);
 				}
-				if (menu_secundari == 4) {
+				else {
+					JOptionPane.showMessageDialog(frame_aux(), "No hay ningun articulo en el almacen", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			if (secundario.matches("4-Precio de venta") == true) {
+				if(articles.size()>0) {
 					System.out.println("\n Quin article vol modificar? (El primer es 0) \n ");
 					for (int i=0; i < articles.size(); i++) {
 						System.out.println(articles.get(i));
@@ -209,75 +269,77 @@ public class almacen_grafico {
 					System.out.println("\n Quin es el preu de venda que vol asignar a l'article? \n ");
 					modificar_preu = sc.nextDouble();
 					if (modificar_preu < 0.0) {
-						System.out.println("\n No pots asignar numeros negatius \n");
+						JOptionPane.showMessageDialog(frame_aux(), "No puedes asignar un precio negativo", "Error", JOptionPane.ERROR_MESSAGE);
 					}
-					preu_a_modificar = articles.get(entrada).getPreuDeVenda();
-					if (modificar_preu >= 0.0) {
+					else {
 						preu_a_modificar = modificar_preu;
+						articles.get(entrada).setPreuDeVenda(preu_a_modificar);
+						JOptionPane.showMessageDialog(frame_aux(), "Precio modificado correctamente \n el nuevo precio es: " + preu_a_modificar, "Modificacion del precio de compra", JOptionPane.PLAIN_MESSAGE);
 					}
-					articles.get(entrada).setPreuDeVenda(preu_a_modificar);
+				}
+				else {
+					JOptionPane.showMessageDialog(frame_aux(), "No hay ningun articulo en el almacen", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-			while(menu_secundari !=5);
+			if(secundario.matches("5-Salir")) {
+				exit = true;
+			}
 		}
-		if (menu_principal == 5) {
-			System.out.println("\n Per a quina mercaderia vol afegir stock (Comneça per 0) \n");
-			for (int i=0; i < articles.size(); i++) {
-				System.out.println(articles.get(i));
-			}
-			entrada = sc.nextInt();
-			System.out.println("\n Quina es la quantitat que vol afegir? \n");
-			check = sc.nextInt();
-			if (check < 0) {
-				System.out.println("\n No pots asignar valors negatius \n");
-			}
-			if (check >= 0) {
-				quantitat = check;
-			}
-			valor_a_modificar = articles.get(entrada).getStock();		//Asignam a la variable valor_a_modificar el valor de la variable stock de l'objecte que es troba a la posicio de l'arraylist indicada mitjançant la variable entrada
-			valor_a_modificar += quantitat;								//Sumam al valor d'aquesta variable el valor d'una variable que hem introduit per teclat
-			articles.get(entrada).setStock(valor_a_modificar);			//Una vegada sumat asignam el valor de la variable valor_a_modificar a la variable stock de l'objecte de l'arraylist que indiquem mitjancçant la variable entrada
+		while(exit != true);
+	}
+
+	public void entrada() {
+		System.out.println("\n Per a quina mercaderia vol afegir stock (Comneça per 0) \n");
+		for (int i=0; i < articles.size(); i++) {
+			System.out.println(articles.get(i));
 		}
-		if (menu_principal == 6) {
-			System.out.println("\n Per a quina mercaderia vol retirar stock (Comença per 0) \n");
-			for (int i=0; i < articles.size(); i++) {
-				System.out.println(articles.get(i));
-			}
-			entrada = sc.nextInt();
-			System.out.println("\n Quina es la quantitat que vol retirar? \n");
-			check = sc.nextInt();
-			if (check < 0) {
-				System.out.println("\n No pots restar valors negatius \n");
-			}
-			if (check >= 0) {
-				quantitat = check;
-			}
+		entrada = sc.nextInt();
+		System.out.println("\n Quina es la quantitat que vol afegir? \n");
+		check = sc.nextInt();
+		if (check < 0) {
+			JOptionPane.showMessageDialog(frame_aux(), "No pueden entrar valores negativos", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		else{
+			quantitat = check;
 			valor_a_modificar = articles.get(entrada).getStock();
-			if(quantitat > valor_a_modificar) {
-				System.out.println("\n D'aquest article nomes queda/en " + valor_a_modificar + " unitat/s \n");
-			}
-			if(quantitat <= valor_a_modificar) {
-				valor_a_modificar -= quantitat;		//El mateix que a la suma pero aqui restam el valor de les variables.
-				articles.get(entrada).setStock(valor_a_modificar);
-			}
+			valor_a_modificar += quantitat;
+			articles.get(entrada).setStock(valor_a_modificar);
+			JOptionPane.showMessageDialog(frame_aux(), "Mercancias añadidas correctamente", "Entrada", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
-	public class ventanita{
-		JFrame main = new JFrame();
-		Object[] opciones = {"Iniciar","Salir"};
-		String menu = (String)JOptionPane.showInputDialog(main, "Bienvenido al aplicativo", "Cancer Software Company",JOptionPane.PLAIN_MESSAGE,null,opciones, "Iniciar");
-		if((menu != null) && menu.length()>0) {
 
+	public void salida() {
+		System.out.println("\n Per a quina mercaderia vol retirar stock (Comença per 0) \n");
+		for (int i=0; i < articles.size(); i++) {
+			System.out.println(articles.get(i));
+		}
+		entrada = sc.nextInt();
+		System.out.println("\n Quina es la quantitat que vol retirar? \n");
+		check = sc.nextInt();
+		if (check < 0) {
+			System.out.println("\n No pots restar valors negatius \n");
+		}
+		if (check >= 0) {
+			quantitat = check;
+		}
+		valor_a_modificar = articles.get(entrada).getStock();
+		if(quantitat > valor_a_modificar) {
+			JOptionPane.showMessageDialog(frame_aux(), "De esta mercancia solo quedan/a " + valor_a_modificar + " unidades/d", "Error", JOptionPane.ERROR_MESSAGE);
+			
 		}
 		else {
-			main.setDefaultCloseOperation(main.EXIT_ON_CLOSE);
+			valor_a_modificar -= quantitat;		//El mateix que a la suma pero aqui restam el valor de les variables.
+			articles.get(entrada).setStock(valor_a_modificar);
+			JOptionPane.showMessageDialog(frame_aux(), "Mercancias eliminadas correctamente", "Salida", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 
-
-
-	public static void main (String[] args) {
-		ventanita ventana = new ventanita();
+	public static void main(String[]args) {
+		almacen_grafico kk = new almacen_grafico();
+		if((kk.frame() != null)&& kk.frame().length()>0) {
+			do {
+			}
+			while(kk.frame().matches("7-Salir") != true);
+		}
 	}
-}
 }
