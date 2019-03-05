@@ -1,6 +1,6 @@
 package MySQL;
 
-import java.sql.Date;
+import java.util.Date;
 
 public abstract class Sonda {
 	public boolean enregistarTemperatura(String IP, String Ubicacio, double valor) {

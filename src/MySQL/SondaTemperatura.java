@@ -33,9 +33,11 @@ public class SondaTemperatura extends Sonda{
 			while(resultSet.next()) {
 				String ubicacion = resultSet.getString("Ubicacio");
 				String fecha = resultSet.getString("data");
+				String valor = resultSet.getString("valor");
 
 				System.out.println(ubicacion);
 				System.out.println(fecha);
+				System.out.println(valor);
 				System.out.println("===================================");
 			}
 		}
@@ -56,13 +58,14 @@ public class SondaTemperatura extends Sonda{
 	}
 	
 	@Override
-	public double obtenerTemperatura(String Ubicacio, Date data) throws Exception{
+	public double obtenerTemperatura(String Ubicacio, Date data){
 		try {
 			leerBD();
 		}
 		catch(Exception e) {
 			e.getMessage();
 		}
+		return 0;
 	}
 
 	public static void main(String[] args) throws SQLException {
