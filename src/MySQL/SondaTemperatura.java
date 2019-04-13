@@ -14,7 +14,7 @@ public class SondaTemperatura extends Sonda{
 
 	public void leerBD() throws SQLException{
 		try {
-			conexion = DriverManager.getConnection("jdbc:mysql://172.16.26.200/Temperatures?user=alumne&password=tofol");
+			conexion = DriverManager.getConnection("jdbc:mysql://195.77.81.43:44004/Temperatures?user=alumne&password=tofol");
 			statement = conexion.createStatement();
 			resultado = statement.executeQuery("select Ubicacio, data from Temperatures");
 			presentar(resultado);
